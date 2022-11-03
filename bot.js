@@ -1,18 +1,10 @@
 // Our Twitter library
-import Twit from "twit";
 import { default as TwitService } from "./twitService.js";
 
 const twitService = new TwitService();
-// twitService.postTweet("hello world 2");
-const tweets = twitService
-  .searchTweet("banana", new Date("2011/07/11"), 10)
-  .then((res) => console.log(res));
-// console.log(tweets).then((res) => console.log(res));
 
-// We need to include our configuration file
-// var T = new Twit(require("./config.js"));
-
-// const t = new TwitService();
+const tweet = await twitService.postTweet("reply test 2");
+const reply = await twitService.reply(tweet.id_str, "test reply");
 
 // This is the URL of a search for the latest tweets on the '#mediaarts' hashtag.
 // var mediaArtsSearch = { q: "#mediaarts", count: 10, result_type: "recent" };

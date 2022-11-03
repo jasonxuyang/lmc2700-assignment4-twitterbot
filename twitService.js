@@ -7,28 +7,87 @@ export default class TwitService {
     this.twit = new Twit(config);
   }
 
+  // Posts a tweet with the passed in message
   // params:
-  //    message<string>
+  //    message: string
   postTweet = async (message) => {
-    return this.twit
-      .post("statuses/update", { status: message })
-      .then((res) => res.data)
-      .catch((err) => console.error(err));
+    try {
+      const res = await this.twit.post("statuses/update", { status: message });
+      return res.data;
+    } catch (err) {
+      return console.error(err);
+    }
   };
 
+  // Search for a {count} number of tweets since a certain day with the passed in query.
   // params:
-  //    query<string>
-  //    date<Date>
-  //    count<number>
+  //    query: string
+  //    date: Date
+  //    count: number
   searchTweet = async (query, date, count) => {
     const d = date.toISOString().split("T")[0];
     const q = `${query} since:${d}`;
-    console.log(q);
-    return this.twit
-      .get("search/tweets", { q, count })
-      .then((res) => res.data)
-      .catch((err) => {
-        console.error(err);
+    try {
+      const res = await this.twit.get("search/tweets", { q, count });
+      return res.data;
+    } catch (err) {
+      return console.error(err);
+    }
+  };
+
+  // Get {count} most recent mentions, with the option to include retweets
+  // params:
+  //    count: number
+  //    includeRetweets: boolean
+  getMentions = async (count, includeRetweets) => {
+    try {
+      const res = await this.twit.get("statuses/mentions_timeline", {
+        count,
+        include_rts: includeRetweets,
       });
+      return res.data;
+    } catch (err) {
+      return console.error(err);
+    }
+  };
+
+  // Reply to a tweet with the passed in message
+  // params:
+  //    tweetId: string
+  //    message: string
+  reply = async (tweetId, message) => {
+    try {
+      const res = await this.twit.post("statuses/update", {
+        status: message,
+        in_reply_to_status_id: tweetId,
+      });
+      return res.data;
+    } catch (err) {
+      return console.error(err);
+    }
+  };
+
+  // Retweet a tweet with the passed in tweetId
+  // params:
+  //    tweetId: string
+  retweet = async (tweetId) => {
+    try {
+      const res = await this.twit.post("statuses/retweet/:id", { id: tweetId });
+      return res.data;
+    } catch (err) {
+      return console.error(err);
+    }
+  };
+
+  // Delete a tweet with the passed in tweetId
+  // params:
+  //    tweetId: string
+  delete = async (tweetId) => {
+    try {
+      const res = await this.twit.post("statuses/destroy/:id", { id: tweetId });
+      return res.data;
+    } catch (err) {
+      return console.error(err);
+    }
   };
 }
