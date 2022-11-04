@@ -17,6 +17,9 @@ const bot = async () => {
   const tweet = await twitService.postTweet(`Test Tweet ${tweetCount}`);
   await twitService.reply(tweet.id_str, reverseMessage(tweet.text));
   tweetCount += 1;
+  if (tweetCount > 100) {
+    clearInterval(interval);
+  }
 };
 
-setInterval(bot, MINUTE);
+const interval = setInterval(bot, MINUTE);
