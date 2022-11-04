@@ -65,5 +65,4 @@ const bot = async () => {
   }
 };
 
-bot();
 const interval = setInterval(bot, MINUTE);
