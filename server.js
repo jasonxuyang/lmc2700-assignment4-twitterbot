@@ -22,7 +22,7 @@ const bot = async () => {
     // search for most recent tweet with #yellow jacket and like that tweet
     const searchYellowJacketHashtag = await twitService.searchTweet(
       "#yellowjacket",
-      100
+      1000
     );
     const tweetYellowJacketHashtag =
       searchYellowJacketHashtag.statuses[
@@ -45,7 +45,7 @@ const bot = async () => {
     await twitService.followByScreenName(randomFollowerUser.screen_name);
 
     // find a tweet with the phrase "I think" and retweet it
-    const searchIThinkTweet = await twitService.searchTweet("I think", 100);
+    const searchIThinkTweet = await twitService.searchTweet("innovation", 1000);
     const tweetIThink =
       searchIThinkTweet.statuses[
         Math.floor(Math.random() * searchIThinkTweet.statuses.length)
