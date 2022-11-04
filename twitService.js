@@ -88,4 +88,112 @@ export default class TwitService {
       return console.error(err);
     }
   };
+
+  // Get 20 most recent tweets
+  // params:
+  //    tweetId: string
+  getLikes = async (screenName) => {
+    try {
+      const res = await this.twit.get("favorites/list", {
+        screen_name: screenName,
+      });
+      return res.data;
+    } catch (err) {
+      return console.error(err);
+    }
+  };
+
+  // Like a tweet with the passed in tweetId
+  // params:
+  //    tweetId: string
+  like = async (tweetId) => {
+    try {
+      const res = await this.twit.post("favorites/create", { id: tweetId });
+      return res.data;
+    } catch (err) {
+      return console.error(err);
+    }
+  };
+
+  // Unlike a tweet with the passed in tweetId
+  // params:
+  //    tweetId: string
+  unlike = async (tweetId) => {
+    try {
+      const res = await this.twit.post("favorites/destroy", { id: tweetId });
+      return res.data;
+    } catch (err) {
+      return console.error(err);
+    }
+  };
+
+  // Follow a user with the passed in userId
+  // params:
+  //    screenName: string
+  getFollowedUsersByScreenName = async (screenName) => {
+    try {
+      const res = await this.twit.get("friends/ids", {
+        screen_name: screenName,
+      });
+      return res.data;
+    } catch (err) {
+      return console.error(err);
+    }
+  };
+
+  // Follow a user with the passed in userId
+  // params:
+  //    userId: string
+  getFollowedUsersById = async (userId) => {
+    try {
+      const res = await this.twit.get("friends/ids", {
+        user_id: userId,
+      });
+      return res.data;
+    } catch (err) {
+      return console.error(err);
+    }
+  };
+
+  // Follow a user with the passed in screenName
+  // params:
+  //    screenName: string
+  followByScreenName = async (screenName) => {
+    try {
+      const res = await this.twit.post("friendships/create", {
+        screen_name: screenName,
+      });
+      return res.data;
+    } catch (err) {
+      return console.error(err);
+    }
+  };
+
+  // Follow a user with the passed in userId
+  // params:
+  //    screenName: string
+  followById = async (userId) => {
+    try {
+      const res = await this.twit.post("friendships/create", {
+        user_id: userId,
+      });
+      return res.data;
+    } catch (err) {
+      return console.error(err);
+    }
+  };
+
+  // Get the followers of the users with the passed in userId
+  // params:
+  //    screenName: string
+  getFollowers = async (userId) => {
+    try {
+      const res = await this.twit.get("followers/ids", {
+        user_id: userId,
+      });
+      return res.data;
+    } catch (err) {
+      return console.error(err);
+    }
+  };
 }
