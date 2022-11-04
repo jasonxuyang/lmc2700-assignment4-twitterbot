@@ -18,6 +18,6 @@ export const deleteAllLikes = async () => {
 };
 
 // Takes in a string and reverses it
-export const reverseMessage = (message) => {
-  return message.split("").reverse().join("");
+export const reverseString = (string) => {
+  return string.split("").reverse().join("");
 };
