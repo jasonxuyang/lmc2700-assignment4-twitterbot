@@ -21,12 +21,10 @@ export default class TwitService {
 
   // Search for a {count} number of tweets since a certain day with the passed in query.
   // params:
-  //    query: string
-  //    date: Date
+  //    query: string - can be a hashtag, a user handle, or a message
   //    count: number
-  searchTweet = async (query, date, count) => {
-    const d = date.toISOString().split("T")[0];
-    const q = `${query} since:${d}`;
+  searchTweet = async (query, count) => {
+    const q = query;
     try {
       const res = await this.twit.get("search/tweets", { q, count });
       return res.data;
