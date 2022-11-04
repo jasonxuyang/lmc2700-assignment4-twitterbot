@@ -188,7 +188,7 @@ export default class TwitService {
   //    screenName: string
   getFollowers = async (userId) => {
     try {
-      const res = await this.twit.get("followers/ids", {
+      const res = await this.twit.get("followers/list", {
         user_id: userId,
       });
       return res.data;

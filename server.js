@@ -13,8 +13,8 @@ export const twitService = new TwitService();
 const wordnikService = new WordnikService();
 
 // Reset account state
-deleteAllTweets();
-deleteAllLikes();
+// deleteAllTweets();
+// deleteAllLikes();
 
 let iterations = 0;
 const bot = async () => {
@@ -38,18 +38,19 @@ const bot = async () => {
     const randomFollowingUserId =
       followedUserIds[Math.floor(Math.random() * followedUserIds.length)];
     const followers = await twitService.getFollowers(randomFollowingUserId);
-    const followerUserIds = followers.ids;
-    const randomFollowerUserId =
-      followerUserIds[Math.floor(Math.random() * followerUserIds.length)];
-    await twitService.followById(randomFollowerUserId.toString());
+    const followerUsers = followers.users;
+    const randomFollowerUser =
+      followerUsers[Math.floor(Math.random() * followerUsers.length)];
+    console.log(randomFollowerUser);
+    await twitService.followByScreenName(randomFollowerUser.screen_name);
 
-    // find a tweet with the phrase "I think" and respond "Why do you think that?"
+    // find a tweet with the phrase "I think" and retweet it
     const searchIThinkTweet = await twitService.searchTweet("I think", 100);
     const tweetIThink =
       searchIThinkTweet.statuses[
         Math.floor(Math.random() * searchIThinkTweet.statuses.length)
       ];
-    await twitService.reply(tweetIThink.id_str, "Why do you think that?");
+    await twitService.retweet(tweetIThink.id_str);
 
     // post a randomly generated tweet and reply with the word reverse
     const randomWord = await wordnikService.getRandomWord();
